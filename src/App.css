@@ -814,88 +814,8 @@ p {
 }
 
 
-/********************* floating menu ******************/
-.floating-catalog {
-  position: fixed;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1000;
-}
 
-.catalog-button {
-  background-color: #333;
-  color: #fff;
-  padding: 15px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-}
 
-.catalog-button svg {
-  margin-right: 10px;
-}
-
-.catalog-menu {
-  max-height: 400px; /* Adjust as needed */
-  overflow-y: scroll; /* Enables vertical scrolling */
-  background-color: #444;
-  color: #fff;
-  border-radius: 8px;
-  margin-top: 5px; /* Keeps a small gap between the button and the menu */
-  list-style: none;
-  padding: 10px 0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  position: absolute;  /* Absolute positioning */
-  top: 100%;  /* Ensures the menu opens below the button */
-  right: 0;   /* Aligns the menu to the right side of the button */
-  
-  width: 250px; /* You can adjust this width as needed */
-  /* Hide the scrollbar */
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: transparent transparent; /* For Firefox */
-}
-
-/* Chrome, Safari, and Edge scrollbar hide */
-.catalog-menu::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
-.menu-item {
-  padding: 10px 20px;
-}
-
-.menu-item a {
-  color: #fff;
-  text-decoration: none;
-  display: block;
-  cursor: pointer;
-}
-
-.submenu {
-  margin-top: 5px;
-  padding-left: 15px;
-  list-style: none;
-}
-
-.submenu li {
-  padding: 5px 0;
-}
-
-.submenu a {
-  color: #ddd;
-  text-decoration: none;
-}
-
-.menu-item a:hover,
-.submenu a:hover {
-  color: #ffb400;
-}
-/* catalog column */
 
 /* Container for the floating catalog with the circular button */
 .floating-catalog-column {

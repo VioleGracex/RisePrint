@@ -37,7 +37,7 @@ export const Services = () => {
                 Мы предлагаем широкий спектр услуг в области полиграфии. Создание бизнес карт, буклетов, стикеров и многое другое.<br />
                 Мы воплощаем ваши идеи в идеальном дизайне.
               </p>
-              <Carousel responsive={responsive} infinite={true} className="owl-carousel owl-theme service-slider">
+              <Carousel responsive={responsive} infinite={true}   arrows={false}  showDots={true} className="owl-carousel owl-theme service-slider">
                 <div className="item">
                   <div className="service-item">
                     <FaPrint className="service-icon" />

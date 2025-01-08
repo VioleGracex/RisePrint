@@ -1,13 +1,31 @@
-import { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
-import { FaTh, FaBars } from "react-icons/fa"; // For view icons (install react-icons if not done)
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FaTh, FaBars } from "react-icons/fa";
 import { categories } from "../data/categories";
-import { products } from "../data/products";
+import axios from "axios"; // Import axios
 
 export default function ProductList() {
+  const [products, setProducts] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [viewType, setViewType] = useState("grid"); // 'grid' or 'list'
-  const [cardSize, setCardSize] = useState(200); // Initial card size in pixels
+  const [viewType, setViewType] = useState("grid");
+  const [cardSize, setCardSize] = useState(200);
+  const [connectionStatus, setConnectionStatus] = useState(""); // New state for connection status
+  const [productCount, setProductCount] = useState(0); // New state for product count
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/products'); // Using axios to fetch data
+        setProducts(response.data); // Axios stores response data in response.data
+        setProductCount(response.data.length); // Update product count
+        setConnectionStatus("Connection successful. Products loaded."); // Success message
+      } catch (error) {
+        setConnectionStatus(`Failed to connect to the database: ${error.message}`); // Error message
+      }
+    };
+    
+    fetchProducts();
+  }, []);
 
   const toggleCategory = (category) => {
     setSelectedCategories((prevSelected) =>
@@ -23,7 +41,6 @@ export default function ProductList() {
 
   return (
     <div className="main-container flex p-4">
-      {/* Categories Column */}
       <div className="categories-container w-64 mr-8">
         <div className="categories-column p-4 bg-gray-100 rounded-lg">
           <h3 className="font-semibold mb-2">Категории</h3>
@@ -45,9 +62,12 @@ export default function ProductList() {
         </div>
       </div>
 
-      {/* Products Section */}
       <div className="products-container flex-1 flex flex-col">
-        {/* View Type Toggle and Slider on Right */}
+        <div className="mb-4">
+          <p className="text-sm text-gray-700">{connectionStatus}</p>
+          {productCount > 0 && <p>Number of products: {productCount}</p>}
+        </div>
+
         <div className="view-toggle mb-4 flex justify-end items-center">
           <button
             onClick={() => setViewType(viewType === "grid" ? "list" : "grid")}
@@ -56,7 +76,6 @@ export default function ProductList() {
             {viewType === "grid" ? <FaBars /> : <FaTh />}
           </button>
 
-          {/* Slider for Card Size */}
           <label className="mr-4">Размер карточек</label>
           <input
             type="range"
@@ -68,46 +87,23 @@ export default function ProductList() {
           />
         </div>
 
-        {/* Products Display */}
         <div
           className={`products-section ${viewType === "grid" ? "grid gap-4" : "block"}`}
           style={{
-            gridTemplateColumns:
-              viewType === "grid" && cardSize >= 150
-                ? `repeat(auto-fit, minmax(${cardSize}px, 1fr))`
-                : "none",
-            gridAutoRows: "minmax(250px, auto)", // Consistent row height
+            gridTemplateColumns: viewType === "grid" && cardSize >= 150
+              ? `repeat(auto-fit, minmax(${cardSize}px, 1fr))`
+              : "none",
+            gridAutoRows: "minmax(250px, auto)",
             justifyItems: "center",
             rowGap: "16px",
           }}
         >
           {filteredProducts.map((product) => (
-            <Link
-              key={product.id} // Unique key for each product
-              to={`/product/${product.id}`} // Link to the product page using the product ID
-              className={`product-card p-4 bg-white rounded-lg shadow-md ${viewType === "list" ? "flex items-center space-x-4" : ""}`}
-              style={{
-                width: viewType === "list" ? "100%" : `${cardSize}px`,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                boxSizing: "border-box",
-              }}
-            >
-              <img
-                alt={product.imageAlt}
-                src={product.imageSrc}
-                className={`rounded-lg ${viewType === "list" ? "w-16 h-16" : "w-full"}`}
-                style={{
-                  height: `${cardSize - 60}px`,
-                  maxHeight: "250px",
-                  objectFit: "cover",
-                  aspectRatio: "4 / 3",
-                }}
-              />
-              <div className="product-text mt-4 text-center">
-                <h3 className="text-sm text-gray-700">{product.name}</h3>
-                <p className="text-lg font-medium text-gray-900">{product.price}</p>
+            <Link key={product.id} to={`/product/${product.id}`} className="product-card">
+              <img alt={product.image_alt} src={product.image_src} />
+              <div className="product-text">
+                <h3>{product.name}</h3>
+                <p>{product.price}</p>
               </div>
             </Link>
           ))}
