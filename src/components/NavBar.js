@@ -5,7 +5,6 @@ import logo from '../assets/img/logo 25@2x.png';
 import navIcon1 from "../assets/img/vk white.png";
 import navIcon2 from "../assets/img/telegram white.png";
 import navIcon3 from "../assets/img/whatsapp white.png";
-import FloatingCatalogMenuColumn from "./FloatingCatalogMenuColumn";
 import { HashLink } from 'react-router-hash-link';
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -43,7 +42,7 @@ export const NavBar = () => {
             <Nav className="ms-auto navbar-links">
               <Nav.Link href="/" className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('home')}>Главная</Nav.Link>
               <Nav.Link href="#services" className={activeLink === 'services' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('services')}>Услуги</Nav.Link>
-              <Nav.Link href="#projects" className={activeLink === 'projects' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('projects')}>Проекты</Nav.Link>
+              <Nav.Link href="/catalog" className={activeLink === 'catalog' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('catalog')}>Каталог</Nav.Link>
               <Nav.Link href="#price-list" className={activeLink === 'price-list' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('price-list')}>Прайс-лист</Nav.Link>
               
               {/* New icons */}
@@ -70,7 +69,6 @@ export const NavBar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <FloatingCatalogMenuColumn />
     </div>
   );
 }

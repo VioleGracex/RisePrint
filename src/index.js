@@ -17,7 +17,7 @@ root.render(
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/PolygraphyCalculator" element={<PolygraphyCalculator />} />
-        <Route path="/Shop" element={<ProductList />} />
+        <Route path="/catalog" element={<ProductList />} />
         <Route path="/product/:productId" element={<ProductPage />} /> {/* Corrected route for product details page */}
       </Routes>
     </Router>
